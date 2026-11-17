@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#6C4CF1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Campus+</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,Segoe UI,Roboto,sans-serif}
+body{background:#F4F2FF;color:#1E1B3A;max-width:480px;margin:auto;min-height:100vh;padding-bottom:80px}
+header{background:linear-gradient(135deg,#6C4CF1,#A78BFA);color:#fff;padding:24px 20px 28px;border-radius:0 0 24px 24px}
+header h1{font-size:24px}header p{opacity:.9;margin-top:4px}
+.screen{display:none;padding:16px}.screen.active{display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:#fff;border-radius:18px;padding:18px 14px;box-shadow:0 2px 8px #0001;cursor:pointer;text-align:center}
+.tile span{font-size:34px;display:block}.tile b{display:block;margin-top:6px}
+.card{background:#fff;border-radius:16px;padding:14px;margin:10px 0;box-shadow:0 2px 8px #0001}
+.card h3{font-size:16px}.card p{font-size:14px;color:#555;margin-top:4px}
+.tag{display:inline-block;background:#EDE9FE;color:#6C4CF1;font-size:12px;padding:3px 8px;border-radius:10px;margin-top:6px}
+h2{margin:8px 0 6px}
+.btn{background:#6C4CF1;color:#fff;border:none;border-radius:12px;padding:14px;width:100%;font-size:16px;margin-top:12px;cursor:pointer}
+.back{background:none;border:none;color:#6C4CF1;font-size:16px;margin-bottom:6px;cursor:pointer}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;display:flex;justify-content:space-around;padding:10px 0 14px;box-shadow:0 -2px 10px #0001}
+nav button{background:none;border:none;font-size:12px;color:#777;cursor:pointer}nav button span{font-size:22px;display:block}
+input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #ccc;margin-top:6px;font-size:15px}
+label{display:block;margin-top:12px;font-size:14px}
+.row{display:flex;justify-content:space-between;align-items:center;margin:12px 0}
+#onboard{position:fixed;inset:0;background:#6C4CF1;color:#fff;z-index:10;display:flex;flex-direction:column;justify-content:center;padding:30px;text-align:center}
+#onboard span{font-size:70px}#onboard p{margin:14px 0}
+#onboard .btn{background:#fff;color:#6C4CF1}
+.result{background:#EDE9FE;border-radius:12px;padding:14px;margin-top:14px;display:none}
+</style>
+</head>
+<body>
+
+<!-- ÉCRAN DE BIENVENUE + CERTIFICAT DE SCOLARITÉ -->
+<div id="onboard">
+  <div id="ob1"><span>🎓</span><h1>Bienvenue sur Campus+</h1>
+  <p>La vie étudiante plus accessible, même avec un petit budget.</p>
+  <p>Sport · Nourriture · Soutien psy · Cours · Jobs · Aides</p>
+  <button class="btn" onclick="ob(2)">Commencer</button></div>
+  <div id="ob2" style="display:none"><span>🔒</span><h2>Vérification étudiante</h2>
+  <p>Pour la sécurité de tous, ajoute ton certificat de scolarité.</p>
+  <input type="file" accept="image/*,.pdf" style="background:#fff;color:#333">
+  <button class="btn" onclick="ob(3)">Valider</button></div>
+  <div id="ob3" style="display:none"><span>✅</span><h2>C'est parti !</h2>
+  <p>Ton compte est vérifié. Choisis une rubrique depuis l'accueil. Tu peux rester anonyme à tout moment dans ton profil.</p>
+  <button class="btn" onclick="document.getElementById('onboard').style.display='none'">Découvrir l'appli</button></div>
+</div>
+
+<header><h1>Salut 👋</h1><p>Qu'est-ce qu'on fait aujourd'hui ?</p></header>
+
+<!-- ACCUEIL -->
+<div class="screen active" id="home">
+  <div class="grid">
+    <div class="tile" onclick="go('sport')"><span>🏃</span><b>Sport</b></div>
+    <div class="tile" onclick="go('food')"><span>🍎</span><b>Nourriture</b></div>
+    <div class="tile" onclick="go('psy')"><span>💬</span><b>Soutien psy</b></div>
+    <div class="tile" onclick="go('cours')"><span>📚</span><b>Cours</b></div>
+    <div class="tile" onclick="go('jobs')"><span>💼</span><b>Jobs & Intérim</b></div>
+    <div class="tile" onclick="go('aides')"><span>💶</span><b>Simuler mes aides</b></div>
+  </div>
+  <h2 style="margin-top:20px">📍 Près de chez toi</h2>
+  <div class="card"><h3>Soirée jeux étudiante</h3><p>Vendredi 19h · Maison des associations · Gratuit</p><span class="tag">Événement ville</span></div>
+  <div class="card"><h3>Panier anti-gaspi à 3 €</h3><p>Boulangerie partenaire · à 400 m</p><span class="tag">Bon plan</span></div>
+</div>
+
+<!-- SPORT -->
+<div class="screen" id="sport"><button class="back" onclick="go('home')">← Retour</button><h2>🏃 Sport</h2>
+  <div class="card"><h3>-50 % salle partenaire</h3><p>Abonnement étudiant à 14,90 €/mois</p><span class="tag">Réduction</span></div>
+  <div class="card"><h3>Groupe running du dimanche</h3><p>12 étudiants de ta ville · tous niveaux</p><span class="tag">Groupe</span></div>
+  <div class="card"><h3>Coaching sportif bénévole</h3><p>Programme adapté et suivi chaque semaine</p><span class="tag">Accompagnement</span></div>
+</div>
+
+<!-- NOURRITURE -->
+<div class="screen" id="food"><button class="back" onclick="go('home')">← Retour</button><h2>🍎 Nourriture</h2>
+  <div class="card"><h3>Banque alimentaire étudiante</h3><p>Distribution le mercredi 17h-19h</p><span class="tag">Association</span></div>
+  <div class="card"><h3>Paniers anti-gaspi</h3><p>Invendus des commerces à petit prix</p><span class="tag">Anti-gaspi</span></div>
+  <div class="card"><h3>Repas partagé de Noël</h3><p>Ne passe pas les fêtes seul·e · 8 places restantes</p><span class="tag">Partage</span></div>
+  <div class="card"><h3>Promos de la semaine</h3><p>Les meilleures offres des magasins partenaires</p><span class="tag">Bon plan</span></div>
+</div>
+
+<!-- PSY -->
+<div class="screen" id="psy"><button class="back" onclick="go('home')">← Retour</button><h2>💬 Soutien psychologique</h2>
+  <div class="card"><h3>Parler à quelqu'un maintenant</h3><p>Écoute bénévole, anonyme si tu le souhaites</p><span class="tag">Anonyme</span></div>
+  <div class="card"><h3>Séance avec un psychologue</h3><p>En visio ou en présentiel · tarif étudiant</p><span class="tag">Professionnel</span></div>
+  <div class="card"><h3>Groupes de parole</h3><p>Stress des examens, solitude, orientation…</p><span class="tag">Groupe</span></div>
+  <p style="font-size:13px;margin-top:10px">En cas d'urgence : appelle le 3114 (gratuit, 24h/24).</p>
+</div>
+
+<!-- COURS -->
+<div class="screen" id="cours"><button class="back" onclick="go('home')">← Retour</button><h2>📚 Aide aux cours</h2>
+  <div class="card"><h3>Maths – niveau lycée</h3><p>Léa, étudiante en L3, propose 2 h/semaine</p><span class="tag">Bénévole</span></div>
+  <div class="card"><h3>Anglais – conversation</h3><p>Groupe de 4 · en visio</p><span class="tag">Groupe</span></div>
+  <button class="btn" onclick="alert('Demande envoyée ! (démo)')">Demander de l'aide</button>
+</div>
+
+<!-- JOBS -->
+<div class="screen" id="jobs"><button class="back" onclick="go('home')">← Retour</button><h2>💼 Jobs & Intérim</h2>
+  <div class="card"><h3>Préparateur de commandes</h3><p>Week-end · 12,50 €/h · compatible cours</p><span class="tag">Intérim</span></div>
+  <div class="card"><h3>Baby-sitting</h3><p>Mercredi après-midi · près de ton école</p><span class="tag">Job étudiant</span></div>
+  <h2 style="margin-top:16px">📰 Actus job dating</h2>
+  <div class="card"><h3>Job dating de la ville</h3><p>Samedi 10h-16h · 30 entreprises</p><span class="tag">Événement</span></div>
+</div>
+
+<!-- SIMULATEUR D'AIDES -->
+<div class="screen" id="aides"><button class="back" onclick="go('home')">← Retour</button><h2>💶 Simuler mes aides</h2>
+  <label>Ton âge<input id="age" type="number" placeholder="ex : 20"></label>
+  <label>Tu vis…<select id="log"><option value="0">Chez mes parents</option><option value="1">En logement seul·e / coloc</option></select></label>
+  <label>Revenus des parents (par an)<select id="rev"><option value="2">Moins de 25 000 €</option><option value="1">Entre 25 000 et 40 000 €</option><option value="0">Plus de 40 000 €</option></select></label>
+  <button class="btn" onclick="simuler()">Simuler</button>
+  <div class="result" id="res"></div>
+  <p style="font-size:12px;margin-top:10px;color:#777">Estimation indicative pour la démo, pas un calcul officiel.</p>
+</div>
+
+<!-- PROFIL -->
+<div class="screen" id="profil"><h2>👤 Mon profil</h2>
+  <div class="card">
+    <div class="row"><span>Mode anonyme</span><input type="checkbox" style="width:auto"></div>
+    <div class="row"><span>Partager ma localisation</span><input type="checkbox" style="width:auto" checked></div>
+    <div class="row"><span>Voir les étudiants de mon école</span><input type="checkbox" style="width:auto" checked></div>
+  </div>
+  <h2>🤝 Mes contacts</h2>
+  <div class="card"><h3>Groupe running</h3><p>Rencontré via Sport</p></div>
+  <div class="card"><h3>Léa (maths)</h3><p>Rencontrée via Cours</p></div>
+  <button class="btn" onclick="document.getElementById('onboard').style.display='flex';ob(1)">Revoir le guide d'utilisation</button>
+</div>
+
+<nav>
+  <button onclick="go('home')"><span>🏠</span>Accueil</button>
+  <button onclick="go('jobs')"><span>💼</span>Jobs</button>
+  <button onclick="go('aides')"><span>💶</span>Aides</button>
+  <button onclick="go('profil')"><span>👤</span>Profil</button>
+</nav>
+
+<script>
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function ob(n){[1,2,3].forEach(i=>document.getElementById('ob'+i).style.display=i==n?'block':'none')}
+function simuler(){
+  const age=+document.getElementById('age').value,log=+document.getElementById('log').value,rev=+document.getElementById('rev').value;
+  let t='';
+  if(rev>0)t+='🎓 Bourse sur critères sociaux : probablement éligible<br>';
+  if(log)t+='🏠 Aide au logement (APL) : probablement éligible<br>';
+  if(age>=18&&age<=25)t+='🍽️ Repas CROUS à petit prix : éligible<br>';
+  if(age>=18)t+='💼 Prime d\'activité si tu travailles : à vérifier<br>';
+  if(!t)t='Pas d\'aide détectée avec ces infos, mais renseigne-toi auprès du CROUS !';
+  const r=document.getElementById('res');r.innerHTML=t;r.style.display='block';
+}
+</script>
+</body>
+</html>
